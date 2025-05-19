@@ -2,10 +2,19 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/src/server.ts",
+    "dev" : "modemon src/server.ts",
+    "build": "tsc",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "npm run prisma:generate && ts-node prisma/seed.ts"
   },
+"prisma": {
+  "seed": "ts-node --esm prisma/seed.ts"
+},
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "axios": "^1.7.9",
