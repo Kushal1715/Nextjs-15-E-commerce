@@ -99,6 +99,17 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     );
 
     await setToken(res, accessToken, refreshToken);
+
+    res.status(200).json({
+      success: true,
+      message: "login successful",
+      user: {
+        id: userAlreadyExists.id,
+        name: userAlreadyExists.name,
+        email: userAlreadyExists.email,
+        role: userAlreadyExists.role,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
