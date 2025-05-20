@@ -6,17 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/src/server.ts",
-    "dev" : "modemon src/server.ts",
+    "dev": "modemon src/server.ts",
     "build": "tsc",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:seed": "npm run prisma:generate && ts-node prisma/seed.ts"
   },
-"prisma": {
-  "seed": "ts-node --esm prisma/seed.ts"
-},
+  "prisma": {
+    "seed": "ts-node --esm prisma/seed.ts"
+  },
   "dependencies": {
-    "@prisma/client": "^6.2.1",
+    "@prisma/client": "^6.7.0",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.5.1",

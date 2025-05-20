@@ -14,6 +14,7 @@ async function main(){
     })
 
     if(existingSuperAdmin){
+        console.log("Super admin already exists");
         return;
     }
 
