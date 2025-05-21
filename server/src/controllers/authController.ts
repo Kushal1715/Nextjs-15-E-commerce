@@ -117,3 +117,48 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     });
   }
 };
+
+export const refreshAccessToken = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    res.status(401).json({ success: false, message: "invalid request" });
+    return;
+  }
+
+  try {
+    const user = await prisma.user.findFirst({
+      where: { refereshToken: refreshToken },
+    });
+
+    if (!user) {
+      res.status(401).json({
+        success: false,
+        message: "user not found",
+      });
+      return;
+    }
+
+    const { accessToken, refreshToken: newRefreshToken } = generateToken(
+      user.id,
+      user.email,
+      user.role
+    );
+
+    await setToken(res, accessToken, newRefreshToken);
+
+    res.status(200).json({
+      success: true,
+      message: "refresh token refreshed successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "refresh token error",
+    });
+  }
+};
