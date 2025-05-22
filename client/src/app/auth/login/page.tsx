@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-const RegisterPage = () => {
+const LoginPage = () => {
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:block w-1/2 relative overflow-hidden">
@@ -29,17 +29,6 @@ const RegisterPage = () => {
             <Image src={logo} alt="logo" height={50} width={200} />
           </div>
           <form className="space-y-4">
-            <div className="space-y-1">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                name="name"
-                type="text"
-                placeholder="Enter your name"
-                required
-                className="bg-[#ffede1]"
-              />
-            </div>
             <div className="space-y-1">
               <Label htmlFor="name">Email</Label>
               <Input
@@ -66,15 +55,15 @@ const RegisterPage = () => {
               type="submit"
               className="w-full bg-black text-white hover:bg-black transition-colors"
             >
-              <>CREATE ACCOUNT</>
+              <>LOGIN</>
             </Button>
             <p className="text-center text-[#3f3d56] text-sm">
-              Already have an account{" "}
+              Don't have an account{" "}
               <Link
-                href={"/auth/login"}
+                href={"/auth/register"}
                 className="text-[#000] hover:underline font-bold"
               >
-                Sign In
+                Register
               </Link>
             </p>
           </form>
@@ -84,4 +73,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
