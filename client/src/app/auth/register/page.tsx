@@ -4,6 +4,8 @@ import logo from "../../../../public/images/logo1.png";
 import Image from "next/image";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const RegisterPage = () => {
   return (
@@ -23,7 +25,7 @@ const RegisterPage = () => {
           <div className="flex justify-center">
             <Image src={logo} alt="logo" height={50} width={200} />
           </div>
-          <form>
+          <form className="space-y-4">
             <div className="space-y-1">
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -35,6 +37,43 @@ const RegisterPage = () => {
                 className="bg-[#ffede1]"
               />
             </div>
+            <div className="space-y-1">
+              <Label htmlFor="name">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Enter your email"
+                required
+                className="bg-[#ffede1]"
+              />
+            </div>
+            <div className="space-y-1">
+              <Label htmlFor="name">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="text"
+                placeholder="Enter your password"
+                required
+                className="bg-[#ffede1]"
+              />
+            </div>
+            <Button
+              type="submit"
+              className="w-full bg-black text-white hover:bg-black transition-colors"
+            >
+              <>CREATE ACCOUNT</>
+            </Button>
+            <p className="text-center text-[#3f3d56] text-sm">
+              Already have an account{" "}
+              <Link
+                href={"/auth/login"}
+                className="text-[#000] hover:underline font-bold"
+              >
+                Sign In
+              </Link>
+            </p>
           </form>
         </div>
       </div>
