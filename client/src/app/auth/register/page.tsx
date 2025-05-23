@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import banner2 from "../../../../public/images/banner2.jpg";
 import logo from "../../../../public/images/logo1.png";
 import Image from "next/image";
@@ -10,6 +10,20 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 const RegisterPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  console.log(formData);
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:block w-1/2 relative overflow-hidden">
@@ -38,6 +52,8 @@ const RegisterPage = () => {
                 placeholder="Enter your name"
                 required
                 className="bg-[#ffede1]"
+                value={formData.name}
+                onChange={handleOnChange}
               />
             </div>
             <div className="space-y-1">
@@ -49,6 +65,8 @@ const RegisterPage = () => {
                 placeholder="Enter your email"
                 required
                 className="bg-[#ffede1]"
+                value={formData.email}
+                onChange={handleOnChange}
               />
             </div>
             <div className="space-y-1">
@@ -60,6 +78,8 @@ const RegisterPage = () => {
                 placeholder="Enter your password"
                 required
                 className="bg-[#ffede1]"
+                value={formData.password}
+                onChange={handleOnChange}
               />
             </div>
             <Button
