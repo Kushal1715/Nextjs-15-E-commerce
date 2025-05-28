@@ -8,6 +8,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { protectSignUpAction } from "@/actions/auth";
+import { toast } from "sonner";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +26,17 @@ const RegisterPage = () => {
   };
 
   console.log(formData);
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const firstLevelOfValidation = await protectSignUpAction(formData.email);
+
+    if (!firstLevelOfValidation.success) {
+      toast(firstLevelOfValidation.error);
+      return;
+    }
+  };
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:block w-1/2 relative overflow-hidden">
@@ -42,7 +55,7 @@ const RegisterPage = () => {
           <div className="flex justify-center">
             <Image src={logo} alt="logo" height={50} width={200} />
           </div>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-1">
               <Label htmlFor="name">Full Name</Label>
               <Input
