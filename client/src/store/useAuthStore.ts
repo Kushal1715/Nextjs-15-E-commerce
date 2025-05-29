@@ -1,3 +1,6 @@
+import { API_ROUTES } from "@/utils/api";
+import axios from "axios";
+
 type User = {
   id: string;
   name: string | null;
@@ -18,3 +21,8 @@ type AuthStore = {
   logout: () => Promise<void>;
   refreshAccessToken: () => Promise<boolean>;
 };
+
+const axiosInstance = axios.create({
+  baseURL: API_ROUTES.AUTH,
+  withCredentials: true,
+});
