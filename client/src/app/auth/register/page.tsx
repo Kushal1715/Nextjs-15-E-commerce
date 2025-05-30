@@ -19,7 +19,7 @@ const RegisterPage = () => {
     email: "",
     password: "",
   });
-  const { register } = useAuthStore();
+  const { register, isLoading } = useAuthStore();
   const router = useRouter();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +46,10 @@ const RegisterPage = () => {
       formData.email,
       formData.password
     );
-    if (userId) router.push("/auth/login");
+    if (userId) {
+      toast("Registration successfull");
+      router.push("/auth/login");
+    }
   };
   return (
     <div className="min-h-screen flex">
@@ -109,8 +112,9 @@ const RegisterPage = () => {
             <Button
               type="submit"
               className="w-full bg-black text-white hover:bg-black transition-colors"
+              disabled={isLoading}
             >
-              <>CREATE ACCOUNT</>
+              {isLoading ? "Creating..." : <>Create account</>}
             </Button>
             <p className="text-center text-[#3f3d56] text-sm">
               Already have an account{" "}
