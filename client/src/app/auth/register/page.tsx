@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { protectSignUpAction } from "@/actions/auth";
 import { toast } from "sonner";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +19,8 @@ const RegisterPage = () => {
     email: "",
     password: "",
   });
+  const { register } = useAuthStore();
+  const router = useRouter();
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -36,6 +40,13 @@ const RegisterPage = () => {
       toast(firstLevelOfValidation.error);
       return;
     }
+
+    const userId = await register(
+      formData.name,
+      formData.email,
+      formData.password
+    );
+    if (userId) router.push("/auth/login");
   };
   return (
     <div className="min-h-screen flex">
