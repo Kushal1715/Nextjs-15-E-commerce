@@ -8,9 +8,15 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { protectSignInAction } from "@/actions/auth";
+import { toast } from "sonner";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const { login, isLoading } = useAuthStore();
+  const router = useRouter();
 
   const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -19,7 +25,30 @@ const LoginPage = () => {
     }));
   };
 
-  console.log(formData);
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const firstLevelOfValidation = await protectSignInAction(formData.email);
+
+    if (!firstLevelOfValidation.success) {
+      toast(firstLevelOfValidation.error);
+      return;
+    }
+
+    const success = await login(formData.email, formData.password);
+
+    if (success) {
+      toast("login successfull");
+      const user = useAuthStore.getState().user;
+      console.log(user);
+      if (user?.role === "SUPER_ADMIN") {
+        router.push("/super-admin");
+      } else {
+        router.push("/home");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:block w-1/2 relative overflow-hidden">
@@ -38,7 +67,7 @@ const LoginPage = () => {
           <div className="flex justify-center">
             <Image src={logo} alt="logo" height={50} width={200} />
           </div>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-1">
               <Label htmlFor="name">Email</Label>
               <Input

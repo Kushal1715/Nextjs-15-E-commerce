@@ -29,8 +29,6 @@ const RegisterPage = () => {
     }));
   };
 
-  console.log(formData);
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
