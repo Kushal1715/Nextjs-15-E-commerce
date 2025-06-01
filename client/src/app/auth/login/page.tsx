@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import banner2 from "../../../../public/images/banner2.jpg";
 import logo from "../../../../public/images/logo1.png";
 import Image from "next/image";
@@ -46,8 +46,21 @@ const LoginPage = () => {
       } else {
         router.push("/home");
       }
+    } else {
+      toast("invalid email or password");
     }
   };
+
+  useEffect(() => {
+    const user = useAuthStore.getState().user;
+    if (user) {
+      if (user.role === "SUPER_ADMIN") {
+        router.replace("/super-admin");
+      } else {
+        router.replace("/home");
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex">
