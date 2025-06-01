@@ -14,6 +14,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -60,8 +61,12 @@ const menuItems = [
 
 const SuperAdminSidebar = ({ isOpen, toggle }: SidebarProps) => {
   const router = useRouter();
+  const { logout } = useAuthStore();
 
-  const handleLogout = async () => {};
+  const handleLogout = async () => {
+    await logout();
+    router.push("/auth/login");
+  };
   return (
     <div
       className={cn(
