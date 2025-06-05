@@ -44,3 +44,18 @@ export const authenticateJwt = (
         .json({ success: false, error: "Access token is not present" });
     });
 };
+
+export const isSuperAdmin = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.user && req.user.role === "SUPER_ADMIN") {
+    next();
+  } else {
+    res.status(403).json({
+      success: false,
+      error: "Access denied! Super admin access required",
+    });
+  }
+};
