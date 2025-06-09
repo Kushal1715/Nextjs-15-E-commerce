@@ -60,7 +60,8 @@ export const createProduct = async (
   }
 };
 
-const fetchAllProductsForAdmin = async (
+//fetch all products for admin
+export const fetchAllProductsForAdmin = async (
   req: AuthenticatedRequest,
   res: Response
 ): Promise<void> => {
@@ -70,6 +71,31 @@ const fetchAllProductsForAdmin = async (
       success: true,
       products,
     });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "something went wrong",
+    });
+  }
+};
+
+export const fetchProductById = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const product = await prisma.product.findUnique({ where: { id } });
+
+    if (!product) {
+      res.status(404).json({
+        success: false,
+        message: "product not found",
+      });
+    }
+
+    res.status(200).json(product);
   } catch (error) {
     console.log(error);
     res.status(500).json({
