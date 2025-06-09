@@ -104,3 +104,54 @@ export const fetchProductById = async (
     });
   }
 };
+
+export const updateProductByAdmin = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      brand,
+      description,
+      category,
+      gender,
+      sizes,
+      colors,
+      price,
+      stock,
+      rating,
+    } = req.body;
+
+    const data: any = {};
+
+    if (name) data.name = name;
+    if (brand) data.brand = brand;
+    if (description) data.description = description;
+    if (category) data.category = category;
+    if (gender) data.gender = gender;
+    if (sizes) data.sizes = sizes.split(",");
+    if (colors) data.colors = colors.split(",");
+    if (price) data.price = parseFloat(price);
+    if (stock) data.stock = parseInt(stock);
+    if (rating) data.rating = parseInt(rating);
+
+    const updateProduct = await prisma.product.update({
+      where: { id },
+      data,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "product updated successfully",
+      updateProduct,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "something went wrong",
+    });
+  }
+};
