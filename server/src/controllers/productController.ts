@@ -155,3 +155,24 @@ export const updateProductByAdmin = async (
     });
   }
 };
+
+export const deleteProductByAdmin = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    await prisma.product.delete({ where: { id } });
+
+    res.status(200).json({
+      success: true,
+      message: "product deleted successfully",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "something went wrong",
+    });
+  }
+};
