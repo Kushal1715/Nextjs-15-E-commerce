@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes";
 import { log } from "console";
+import { PrismaClient } from "@prisma/client";
 
 //loading all environment variables
 dotenv.config();
