@@ -1,3 +1,5 @@
+import { create } from "zustand";
+
 export interface Product {
   id: string;
   name: string;
@@ -27,3 +29,17 @@ interface ProductState {
   ) => Promise<Product | null>;
   deleteProductByAdmin: (id: string) => Promise<boolean>;
 }
+
+export const useProductStore = create<ProductState>((set, get) => ({
+  products: [],
+  isLoading: false,
+  error: null,
+  createProduct: async (productData: FormData) => {
+    set({ isLoading: true, error: null });
+    try {
+    } catch (error) {
+      set({ isLoading: false, error: "Failed to create product" });
+      return null;
+    }
+  },
+}));
