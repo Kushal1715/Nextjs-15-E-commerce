@@ -1,3 +1,5 @@
+import { API_ROUTES } from "@/utils/api";
+import axios from "axios";
 import { create } from "zustand";
 
 export interface Product {
@@ -37,6 +39,18 @@ export const useProductStore = create<ProductState>((set, get) => ({
   createProduct: async (productData: FormData) => {
     set({ isLoading: true, error: null });
     try {
+      const response = await axios.post(
+        `${API_ROUTES.PRODUCTS}/create-new-product`,
+        productData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      set({ isLoading: false });
+      return response.data;
     } catch (error) {
       set({ isLoading: false, error: "Failed to create product" });
       return null;
