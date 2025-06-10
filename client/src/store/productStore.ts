@@ -13,3 +13,17 @@ export interface Product {
   soldCount: number;
   images: string[];
 }
+
+interface ProductState {
+  products: Product[];
+  isLoading: boolean;
+  error: string | null;
+  createProduct: (productData: FormData) => Promise<Product | null>;
+  fetchAllProductsForAdmin: () => Promise<void>;
+  fetchProductById: (id: string) => Promise<Product | null>;
+  updateProductByAdmin: (
+    id: string,
+    productData: FormData
+  ) => Promise<Product | null>;
+  deleteProductByAdmin: (id: string) => Promise<boolean>;
+}
