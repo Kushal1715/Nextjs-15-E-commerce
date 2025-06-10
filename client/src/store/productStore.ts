@@ -56,4 +56,64 @@ export const useProductStore = create<ProductState>((set, get) => ({
       return null;
     }
   },
+  fetchAllProductsForAdmin: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(
+        `${API_ROUTES.PRODUCTS}/fetch-admin-products`,
+        {
+          withCredentials: true,
+        }
+      );
+      set({ isLoading: false, products: response.data.products || [] });
+    } catch (error) {
+      set({ isLoading: false, error: "Failed to fetch products" });
+    }
+  },
+  fetchProductById: async (id: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.get(`${API_ROUTES.PRODUCTS}/${id}`, {
+        withCredentials: true,
+      });
+      set({ isLoading: false });
+      return response.data;
+    } catch (error) {
+      set({ isLoading: false, error: "Failed to fetch product" });
+      return null;
+    }
+  },
+  updateProductByAdmin: async (id: string, productData: FormData) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axios.patch(
+        `${API_ROUTES.PRODUCTS}/${id}`,
+        productData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      set({ isLoading: false });
+      return response.data.updateProduct;
+    } catch (error) {
+      set({ isLoading: false, error: "Failed to update product" });
+      return null;
+    }
+  },
+  deleteProductByAdmin: async (id: string) => {
+    set({ isLoading: true, error: null });
+    try {
+      await axios.delete(`${API_ROUTES.PRODUCTS}/${id}`, {
+        withCredentials: true,
+      });
+      set({ isLoading: false });
+      return true;
+    } catch (error) {
+      set({ isLoading: false, error: "Failed to delete product" });
+      return false;
+    }
+  },
 }));
