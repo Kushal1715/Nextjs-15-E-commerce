@@ -1,6 +1,13 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import React, { FormEvent } from "react";
 
@@ -77,6 +84,21 @@ const SuperAdminManageProductPage = () => {
               placeholder="Product Description"
               className="lg:w-4/5 border-black rounded-sm min-h-[150px]"
             />
+          </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Product Brand</Label>
+            <Select name="brand">
+              <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
+                <SelectValue placeholder="Select Brand" />
+              </SelectTrigger>
+              <SelectContent>
+                {brands.map((brand) => (
+                  <SelectItem key={brand} value={brand.toLowerCase()}>
+                    {brand}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
       </form>
