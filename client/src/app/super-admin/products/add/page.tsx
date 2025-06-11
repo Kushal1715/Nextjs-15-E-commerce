@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import React, { FormEvent } from "react";
 
 export const categories = [
@@ -57,16 +58,24 @@ const SuperAdminManageProductPage = () => {
             </button>
           </div>
         </div>
-        <div className="bg-white flex flex-col mt-8 space-y-6">
+        <div className="bg-white flex flex-col mt-8 space-y-8">
           <div className="">
             <h1 className="font-semibold text-2xl">Basic Information</h1>
           </div>
-          <div className="flex justify-between">
-            <Label className="w-1/5 text-lg">Product Name</Label>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Product Name</Label>
             <Input
               name="name"
               placeholder="Product Name"
-              className="w-4/5 border-black rounded-sm"
+              className="lg:w-4/5 border-black rounded-sm"
+            />
+          </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Product Description</Label>
+            <Textarea
+              name="description"
+              placeholder="Product Description"
+              className="lg:w-4/5 border-black rounded-sm min-h-[150px]"
             />
           </div>
         </div>
