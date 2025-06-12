@@ -129,6 +129,19 @@ const SuperAdminManageProductPage = () => {
               </Label>
             </div>
           </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Gender</Label>
+            <Select name="gender">
+              <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
+                <SelectValue placeholder="Select Gender" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="men">Men</SelectItem>
+                <SelectItem value="women">Women</SelectItem>
+                <SelectItem value="kids">Kids</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </form>
     </div>
