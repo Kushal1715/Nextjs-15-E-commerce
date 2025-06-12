@@ -153,6 +153,18 @@ const SuperAdminManageProductPage = () => {
               ))}
             </div>
           </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Colour</Label>
+            <div className="flex flex-wrap gap-2">
+              {colors.map((colour) => (
+                <Button
+                  key={colour.class}
+                  type="button"
+                  className={`w-8 h-8 rounded-full ${colour.class}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </form>
     </div>
