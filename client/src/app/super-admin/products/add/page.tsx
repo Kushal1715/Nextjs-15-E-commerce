@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -141,6 +142,16 @@ const SuperAdminManageProductPage = () => {
                 <SelectItem value="kids">Kids</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Size</Label>
+            <div className="flex flex-wrap gap-2">
+              {sizes.map((size) => (
+                <Button variant="default" key={size} type="button">
+                  {size}
+                </Button>
+              ))}
+            </div>
           </div>
         </div>
       </form>
