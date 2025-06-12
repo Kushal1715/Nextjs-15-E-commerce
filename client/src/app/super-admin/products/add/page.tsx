@@ -165,6 +165,22 @@ const SuperAdminManageProductPage = () => {
               ))}
             </div>
           </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Product Price</Label>
+            <Input
+              name="price"
+              placeholder="Product Price"
+              className="lg:w-4/5 border-black rounded-sm"
+            />
+          </div>
+          <div className="flex items-start lg:flex-row flex-col">
+            <Label className="lg:w-1/5 text-lg">Stock</Label>
+            <Input
+              name="stock"
+              placeholder="Stock"
+              className="lg:w-4/5 border-black rounded-sm"
+            />
+          </div>
         </div>
       </form>
     </div>
