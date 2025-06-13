@@ -81,10 +81,18 @@ const SuperAdminManageProductPage = () => {
     );
   };
 
+  const handleColors = (color: string) => {
+    setSelectedColors((prev) =>
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+    );
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
   console.log(formData);
+  console.log(selectedSizes);
+  console.log(selectedColors);
 
   return (
     <div className="p-4">
@@ -219,6 +227,7 @@ const SuperAdminManageProductPage = () => {
                   key={colour.class}
                   type="button"
                   className={`w-8 h-8 rounded-full ${colour.class}`}
+                  onClick={() => handleColors(colour.name)}
                 />
               ))}
             </div>
