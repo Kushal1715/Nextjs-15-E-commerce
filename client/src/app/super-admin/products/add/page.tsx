@@ -65,6 +65,13 @@ const SuperAdminManageProductPage = () => {
     }));
   };
 
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
@@ -114,7 +121,11 @@ const SuperAdminManageProductPage = () => {
           </div>
           <div className="flex items-start lg:flex-row flex-col">
             <Label className="lg:w-1/5 text-lg">Product Brand</Label>
-            <Select name="brand">
+            <Select
+              name="brand"
+              onValueChange={(value) => handleSelectChange("brand", value)}
+              value={formData.brand}
+            >
               <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
                 <SelectValue placeholder="Select Brand" />
               </SelectTrigger>
@@ -129,7 +140,11 @@ const SuperAdminManageProductPage = () => {
           </div>
           <div className="flex items-start lg:flex-row flex-col">
             <Label className="lg:w-1/5 text-lg">Product Category</Label>
-            <Select name="category">
+            <Select
+              name="category"
+              onValueChange={(value) => handleSelectChange("category", value)}
+              value={formData.category}
+            >
               <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
                 <SelectValue placeholder="Select Category" />
               </SelectTrigger>
@@ -157,7 +172,11 @@ const SuperAdminManageProductPage = () => {
           </div>
           <div className="flex items-start lg:flex-row flex-col">
             <Label className="lg:w-1/5 text-lg">Gender</Label>
-            <Select name="gender">
+            <Select
+              name="gender"
+              onValueChange={(value) => handleSelectChange("gender", value)}
+              value={formData.gender}
+            >
               <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
                 <SelectValue placeholder="Select Gender" />
               </SelectTrigger>
