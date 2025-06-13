@@ -241,7 +241,9 @@ const SuperAdminManageProductPage = () => {
             <div className="flex flex-wrap gap-2">
               {sizes.map((size) => (
                 <Button
-                  variant="default"
+                  variant={`${
+                    selectedSizes.includes(size) ? "default" : "outline"
+                  }`}
                   key={size}
                   type="button"
                   onClick={() => handleSize(size)}
@@ -258,7 +260,11 @@ const SuperAdminManageProductPage = () => {
                 <Button
                   key={colour.class}
                   type="button"
-                  className={`w-8 h-8 rounded-full ${colour.class}`}
+                  className={`w-8 h-8 rounded-full ${colour.class} ${
+                    selectedColors.includes(colour.name)
+                      ? "ring-2 ring-primary ring-offset-2"
+                      : ""
+                  }`}
                   onClick={() => handleColors(colour.name)}
                 />
               ))}
