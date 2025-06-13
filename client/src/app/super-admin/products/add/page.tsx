@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Plus } from "lucide-react";
-import React, { FormEvent } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 export const categories = [
   "Fashion",
@@ -46,9 +46,30 @@ interface FormState {
 }
 
 const SuperAdminManageProductPage = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    brand: "",
+    description: "",
+    category: "",
+    gender: "",
+    price: "",
+    stock: "",
+  });
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
   };
+  console.log(formData);
+
   return (
     <div className="p-4">
       <form onSubmit={handleSubmit}>
@@ -77,6 +98,8 @@ const SuperAdminManageProductPage = () => {
               name="name"
               placeholder="Product Name"
               className="lg:w-4/5 border-black rounded-sm"
+              onChange={handleInputChange}
+              value={formData.name}
             />
           </div>
           <div className="flex items-start lg:flex-row flex-col">
@@ -85,6 +108,8 @@ const SuperAdminManageProductPage = () => {
               name="description"
               placeholder="Product Description"
               className="lg:w-4/5 border-black rounded-sm min-h-[150px]"
+              onChange={handleInputChange}
+              value={formData.description}
             />
           </div>
           <div className="flex items-start lg:flex-row flex-col">
@@ -171,6 +196,8 @@ const SuperAdminManageProductPage = () => {
               name="price"
               placeholder="Product Price"
               className="lg:w-4/5 border-black rounded-sm"
+              onChange={handleInputChange}
+              value={formData.price}
             />
           </div>
           <div className="flex items-start lg:flex-row flex-col">
@@ -179,6 +206,8 @@ const SuperAdminManageProductPage = () => {
               name="stock"
               placeholder="Stock"
               className="lg:w-4/5 border-black rounded-sm"
+              onChange={handleInputChange}
+              value={formData.stock}
             />
           </div>
         </div>
