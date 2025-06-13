@@ -56,6 +56,9 @@ const SuperAdminManageProductPage = () => {
     stock: "",
   });
 
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -70,6 +73,12 @@ const SuperAdminManageProductPage = () => {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleSize = (size: string) => {
+    setSelectedSizes((prev) =>
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+    );
   };
 
   const handleSubmit = (event: FormEvent) => {
@@ -191,7 +200,12 @@ const SuperAdminManageProductPage = () => {
             <Label className="lg:w-1/5 text-lg">Size</Label>
             <div className="flex flex-wrap gap-2">
               {sizes.map((size) => (
-                <Button variant="default" key={size} type="button">
+                <Button
+                  variant="default"
+                  key={size}
+                  type="button"
+                  onClick={() => handleSize(size)}
+                >
                   {size}
                 </Button>
               ))}
