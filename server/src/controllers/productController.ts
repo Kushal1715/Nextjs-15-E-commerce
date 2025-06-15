@@ -9,6 +9,7 @@ export const createProduct = async (
   req: AuthenticatedRequest,
   res: Response
 ): Promise<void> => {
+  console.log(req.body);
   try {
     const {
       name,

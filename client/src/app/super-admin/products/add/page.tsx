@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useProductStore } from "@/store/productStore";
 import { url } from "inspector";
 import { Plus } from "lucide-react";
 import Image from "next/image";
@@ -48,7 +49,7 @@ interface FormState {
 }
 
 const SuperAdminManageProductPage = () => {
-  const [formData, setFormData] = useState({
+  const [formState, setFormState] = useState({
     name: "",
     brand: "",
     description: "",
@@ -62,17 +63,26 @@ const SuperAdminManageProductPage = () => {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
+  const {
+    createProduct,
+    updateProductByAdmin,
+    fetchProductById,
+    fetchAllProductsForAdmin,
+    isLoading,
+    error,
+  } = useProductStore();
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData((prev) => ({
+    setFormState((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({
+    setFormState((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -96,10 +106,24 @@ const SuperAdminManageProductPage = () => {
     }
   };
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const formdata = new FormData();
+
+    Object.entries(formState).forEach(([Key, value]) =>
+      formdata.append(Key, value)
+    );
+
+    formdata.append("sizes", selectedSizes.join(","));
+    formdata.append("colors", selectedSizes.join(","));
+
+    selectedFiles.forEach((file) => formdata.append("images", file));
+
+    const result = await createProduct(formdata);
+    console.log(result);
   };
-  console.log(formData);
+  console.log(formState);
   console.log(selectedSizes);
   console.log(selectedColors);
 
@@ -132,7 +156,7 @@ const SuperAdminManageProductPage = () => {
               placeholder="Product Name"
               className="lg:w-4/5 border-black rounded-sm"
               onChange={handleInputChange}
-              value={formData.name}
+              value={formState.name}
             />
           </div>
           <div className="flex items-start lg:flex-row flex-col">
@@ -142,7 +166,7 @@ const SuperAdminManageProductPage = () => {
               placeholder="Product Description"
               className="lg:w-4/5 border-black rounded-sm min-h-[150px]"
               onChange={handleInputChange}
-              value={formData.description}
+              value={formState.description}
             />
           </div>
           <div className="flex items-start lg:flex-row flex-col">
@@ -150,7 +174,7 @@ const SuperAdminManageProductPage = () => {
             <Select
               name="brand"
               onValueChange={(value) => handleSelectChange("brand", value)}
-              value={formData.brand}
+              value={formState.brand}
             >
               <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
                 <SelectValue placeholder="Select Brand" />
@@ -169,7 +193,7 @@ const SuperAdminManageProductPage = () => {
             <Select
               name="category"
               onValueChange={(value) => handleSelectChange("category", value)}
-              value={formData.category}
+              value={formState.category}
             >
               <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
                 <SelectValue placeholder="Select Category" />
@@ -224,7 +248,7 @@ const SuperAdminManageProductPage = () => {
             <Select
               name="gender"
               onValueChange={(value) => handleSelectChange("gender", value)}
-              value={formData.gender}
+              value={formState.gender}
             >
               <SelectTrigger className="lg:w-4/5 w-full border-black rounded-sm">
                 <SelectValue placeholder="Select Gender" />
@@ -277,7 +301,7 @@ const SuperAdminManageProductPage = () => {
               placeholder="Product Price"
               className="lg:w-4/5 border-black rounded-sm"
               onChange={handleInputChange}
-              value={formData.price}
+              value={formState.price}
             />
           </div>
           <div className="flex items-start lg:flex-row flex-col">
@@ -287,7 +311,7 @@ const SuperAdminManageProductPage = () => {
               placeholder="Stock"
               className="lg:w-4/5 border-black rounded-sm"
               onChange={handleInputChange}
-              value={formData.stock}
+              value={formState.stock}
             />
           </div>
         </div>
