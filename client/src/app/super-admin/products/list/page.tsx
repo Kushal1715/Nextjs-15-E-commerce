@@ -13,9 +13,11 @@ import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import { toast } from "sonner";
 
 const SuperAdminProductListingPage = () => {
-  const { products, fetchAllProductsForAdmin } = useProductStore();
+  const { products, fetchAllProductsForAdmin, deleteProductByAdmin } =
+    useProductStore();
   const router = useRouter();
 
   useEffect(() => {
@@ -24,6 +26,11 @@ const SuperAdminProductListingPage = () => {
 
   const handleDeleteProduct = async (productId: string) => {
     console.log(productId);
+    const deleteProduct = await deleteProductByAdmin(productId);
+    if (deleteProduct) {
+      toast("Product is deleted successfully");
+      fetchAllProductsForAdmin();
+    }
   };
   console.log(products);
   return (
