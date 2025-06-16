@@ -119,7 +119,7 @@ const SuperAdminManageProductPage = () => {
     );
 
     formdata.append("sizes", selectedSizes.join(","));
-    formdata.append("colors", selectedSizes.join(","));
+    formdata.append("colors", selectedColors.join(","));
 
     selectedFiles.forEach((file) => formdata.append("images", file));
 
@@ -146,8 +146,9 @@ const SuperAdminManageProductPage = () => {
             <button
               className="bg-black px-4 md:px-6 py-2 md:py-3 text-white rounded-lg hover:bg-gray-800 transition-colors cursor-pointer"
               type="submit"
+              disabled={isLoading}
             >
-              Publish Product
+              {isLoading ? "Creating..." : "Create"} Product
             </button>
           </div>
         </div>
