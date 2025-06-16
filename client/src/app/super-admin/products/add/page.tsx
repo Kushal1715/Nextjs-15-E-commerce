@@ -14,6 +14,7 @@ import { useProductStore } from "@/store/productStore";
 import { url } from "inspector";
 import { Plus } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 export const categories = [
@@ -72,6 +73,8 @@ const SuperAdminManageProductPage = () => {
     error,
   } = useProductStore();
 
+  const router = useRouter();
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -122,6 +125,9 @@ const SuperAdminManageProductPage = () => {
 
     const result = await createProduct(formdata);
     console.log(result);
+    if (result) {
+      router.push("/super-admin/products/list");
+    }
   };
   console.log(formState);
   console.log(selectedSizes);
