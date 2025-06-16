@@ -1,4 +1,5 @@
 "use client";
+import { protectProductFormAction } from "@/actions/product";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +17,7 @@ import { Plus } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
+import { toast } from "sonner";
 
 export const categories = [
   "Fashion",
@@ -111,6 +113,13 @@ const SuperAdminManageProductPage = () => {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const checkingFirstLevelOfValidation = await protectProductFormAction();
+
+    if (!checkingFirstLevelOfValidation.success) {
+      toast(checkingFirstLevelOfValidation.error);
+      return;
+    }
 
     const formdata = new FormData();
 
