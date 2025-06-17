@@ -29,7 +29,7 @@ const SuperAdminProductListingPage = () => {
     const deleteProduct = await deleteProductByAdmin(productId);
     if (deleteProduct) {
       toast("Product is deleted successfully");
-      fetchAllProductsForAdmin();
+      await fetchAllProductsForAdmin();
     }
   };
   console.log(products);
