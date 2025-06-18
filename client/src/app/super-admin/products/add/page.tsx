@@ -16,7 +16,7 @@ import { url } from "inspector";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export const categories = [
@@ -82,6 +82,32 @@ const SuperAdminManageProductPage = () => {
 
   const router = useRouter();
 
+  useEffect(() => {
+    const fetchProductByIdForEditing = async () => {
+      if (!productId) {
+        return;
+      } else {
+        const product = await fetchProductById(productId);
+        console.log(product);
+        if (product) {
+          setFormState({
+            name: product?.name,
+            brand: product?.brand,
+            description: product?.description,
+            category: product?.category,
+            gender: product?.gender,
+            price: product?.price.toString(),
+            stock: product?.stock.toString(),
+          });
+          setSelectedColors(product.colors);
+          setSelectedSizes(product.sizes);
+        }
+      }
+    };
+
+    fetchProductByIdForEditing();
+  }, [productId]);
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -137,10 +163,15 @@ const SuperAdminManageProductPage = () => {
 
     selectedFiles.forEach((file) => formdata.append("images", file));
 
-    const result = await createProduct(formdata);
-    console.log(result);
-    if (result) {
-      router.push("/super-admin/products/list");
+    if (productId) {
+      const result = await updateProductByAdmin(productId, formdata);
+      console.log(result);
+    } else {
+      const result = await createProduct(formdata);
+      console.log(result);
+      if (result) {
+        router.push("/super-admin/products/list");
+      }
     }
   };
   console.log(formState);
@@ -153,7 +184,8 @@ const SuperAdminManageProductPage = () => {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-lg md:text-3xl text-gray-800 font-semibold">
-              Create New Product
+              {productId ? "Update " : "Create New "}
+              Product
             </h1>
           </div>
           <div>
