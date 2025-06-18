@@ -34,11 +34,11 @@ export const protectLoginRules = arcjet({
       mode: "LIVE",
       block: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
     }),
-    // fixedWindow({
-    //   mode: "LIVE",
-    //   window: "60s",
-    //   max: 3,
-    // }),
+    fixedWindow({
+      mode: "LIVE",
+      window: "60s",
+      max: 3,
+    }),
   ],
 });
 
@@ -49,11 +49,11 @@ export const createNewProductRules = arcjet({
     //   mode: "LIVE",
     //   allow: [],
     // }),
-    fixedWindow({
-      mode: "LIVE",
-      window: "300s",
-      max: 5,
-    }),
+    // fixedWindow({
+    //   mode: "LIVE",
+    //   window: "300s",
+    //   max: 5,
+    // }),
     shield({
       mode: "LIVE",
     }),

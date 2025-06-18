@@ -156,7 +156,6 @@ const SuperAdminManageProductPage = () => {
 
     Object.entries(formState).forEach(([Key, value]) => {
       formdata.append(Key, value);
-      console.log(Key, value);
     });
 
     formdata.append("sizes", selectedSizes.join(","));
@@ -164,15 +163,12 @@ const SuperAdminManageProductPage = () => {
 
     selectedFiles.forEach((file) => formdata.append("images", file));
 
-    if (productId) {
-      const result = await updateProductByAdmin(productId, formdata);
-      console.log(result);
-    } else {
-      const result = await createProduct(formdata);
-      console.log(result);
-      if (result) {
-        router.push("/super-admin/products/list");
-      }
+    const result = productId
+      ? await updateProductByAdmin(productId, formdata)
+      : await createProduct(formdata);
+
+    if (result) {
+      router.push("/super-admin/products/list");
     }
   };
 
