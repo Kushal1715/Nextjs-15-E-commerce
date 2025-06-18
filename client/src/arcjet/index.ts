@@ -34,21 +34,21 @@ export const protectLoginRules = arcjet({
       mode: "LIVE",
       block: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
     }),
-    fixedWindow({
-      mode: "LIVE",
-      window: "60s",
-      max: 3,
-    }),
+    // fixedWindow({
+    //   mode: "LIVE",
+    //   window: "60s",
+    //   max: 3,
+    // }),
   ],
 });
 
 export const createNewProductRules = arcjet({
   key: process.env.ARCJET_KEY!,
   rules: [
-    detectBot({
-      mode: "LIVE",
-      allow: [],
-    }),
+    // detectBot({
+    //   mode: "LIVE",
+    //   allow: [],
+    // }),
     fixedWindow({
       mode: "LIVE",
       window: "300s",

@@ -27,7 +27,13 @@ router.get(
 
 router.get("/:id", authenticateJwt, fetchProductById);
 
-router.patch("/:id", authenticateJwt, isSuperAdmin, updateProductByAdmin);
+router.patch(
+  "/:id",
+  authenticateJwt,
+  isSuperAdmin,
+  upload.array("images", 5),
+  updateProductByAdmin
+);
 
 router.delete("/:id", authenticateJwt, isSuperAdmin, deleteProductByAdmin);
 

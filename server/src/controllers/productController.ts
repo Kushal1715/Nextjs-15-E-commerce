@@ -125,6 +125,8 @@ export const updateProductByAdmin = async (
       rating,
     } = req.body;
 
+    console.log(req.body);
+
     const data: any = {};
 
     if (name) data.name = name;

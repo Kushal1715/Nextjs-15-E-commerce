@@ -154,9 +154,10 @@ const SuperAdminManageProductPage = () => {
 
     const formdata = new FormData();
 
-    Object.entries(formState).forEach(([Key, value]) =>
-      formdata.append(Key, value)
-    );
+    Object.entries(formState).forEach(([Key, value]) => {
+      formdata.append(Key, value);
+      console.log(Key, value);
+    });
 
     formdata.append("sizes", selectedSizes.join(","));
     formdata.append("colors", selectedColors.join(","));
@@ -174,9 +175,6 @@ const SuperAdminManageProductPage = () => {
       }
     }
   };
-  console.log(formState);
-  console.log(selectedSizes);
-  console.log(selectedColors);
 
   return (
     <div className="p-4">
@@ -194,7 +192,14 @@ const SuperAdminManageProductPage = () => {
               type="submit"
               disabled={isLoading}
             >
-              {isLoading ? "Creating..." : "Create"} Product
+              {isLoading
+                ? productId
+                  ? "Updating..."
+                  : "Creating..."
+                : productId
+                ? "Update"
+                : "Create"}{" "}
+              Product
             </button>
           </div>
         </div>

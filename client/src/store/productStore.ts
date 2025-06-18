@@ -91,9 +91,6 @@ export const useProductStore = create<ProductState>((set, get) => ({
         productData,
         {
           withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
         }
       );
       set({ isLoading: false });
