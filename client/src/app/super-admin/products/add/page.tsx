@@ -15,7 +15,7 @@ import { useProductStore } from "@/store/productStore";
 import { url } from "inspector";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "sonner";
 
@@ -65,6 +65,11 @@ const SuperAdminManageProductPage = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+  const searchParams = useSearchParams();
+  const productId = searchParams.get("id");
+
+  console.log(productId);
 
   const {
     createProduct,
