@@ -33,3 +33,25 @@ export const createCoupon = async (
     });
   }
 };
+
+export const fetchAllCoupons = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const coupons = prisma.coupon.findMany({
+      orderBy: { createdAt: "asc" },
+    });
+
+    return res.status(201).json({
+      success: true,
+      coupons,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error: "failed to create a coupon",
+    });
+  }
+};
