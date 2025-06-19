@@ -55,3 +55,28 @@ export const fetchAllCoupons = async (
     });
   }
 };
+
+export const deleteCoupon = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+
+    await prisma.coupon.delete({
+      where: { id },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "coupon deleted successfully",
+      id: id,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error: "failed to create a coupon",
+    });
+  }
+};
