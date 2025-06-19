@@ -69,8 +69,6 @@ const SuperAdminManageProductPage = () => {
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
 
-  console.log(productId);
-
   const {
     createProduct,
     updateProductByAdmin,
@@ -264,39 +262,42 @@ const SuperAdminManageProductPage = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex items-start lg:flex-row flex-col">
-            <Label className="lg:w-1/5 text-lg">Product Image</Label>
-            <div className="flex flex-wrap gap-2">
-              <div className="flex flex-col items-center justify-center border-2 border-gray-400 h-32 w-32">
-                <Plus />
-                <Label className="mt-4 cursor-pointer">
-                  <span>Add Image</span>
-                  <input
-                    type="file"
-                    multiple
-                    className="sr-only"
-                    onChange={handleFileChange}
-                  />
-                </Label>
-              </div>
+          {!productId && (
+            <div className="flex items-start lg:flex-row flex-col">
+              <Label className="lg:w-1/5 text-lg">Product Image</Label>
               <div className="flex flex-wrap gap-2">
-                {selectedFiles.map((file, index) => (
-                  <div
-                    className="border-2 border-gray-400 h-32 w-32"
-                    key={index}
-                  >
-                    <Image
-                      alt="sd"
-                      src={URL.createObjectURL(file)}
-                      width={100}
-                      height={100}
-                      className="h-full w-full"
+                <div className="flex flex-col items-center justify-center border-2 border-gray-400 h-32 w-32">
+                  <Plus />
+                  <Label className="mt-4 cursor-pointer">
+                    <span>Add Image</span>
+                    <input
+                      type="file"
+                      multiple
+                      className="sr-only"
+                      onChange={handleFileChange}
                     />
-                  </div>
-                ))}
+                  </Label>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedFiles.map((file, index) => (
+                    <div
+                      className="border-2 border-gray-400 h-32 w-32"
+                      key={index}
+                    >
+                      <Image
+                        alt="sd"
+                        src={URL.createObjectURL(file)}
+                        width={100}
+                        height={100}
+                        className="h-full w-full"
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
           <div className="flex items-start lg:flex-row flex-col">
             <Label className="lg:w-1/5 text-lg">Gender</Label>
             <Select

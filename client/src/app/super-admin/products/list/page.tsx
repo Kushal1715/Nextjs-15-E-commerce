@@ -36,7 +36,6 @@ const SuperAdminProductListingPage = () => {
       await fetchAllProductsForAdmin();
     }
   };
-  console.log(products);
   return (
     <div className="p-6">
       <div className="flex flex-col gap-6">
