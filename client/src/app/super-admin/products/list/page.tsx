@@ -12,16 +12,20 @@ import { useProductStore } from "@/store/productStore";
 import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { toast } from "sonner";
 
 const SuperAdminProductListingPage = () => {
   const { products, fetchAllProductsForAdmin, deleteProductByAdmin } =
     useProductStore();
   const router = useRouter();
+  const productFetchRef = useRef(false);
 
   useEffect(() => {
-    fetchAllProductsForAdmin();
+    if (!productFetchRef.current) {
+      fetchAllProductsForAdmin();
+      productFetchRef.current = true;
+    }
   }, []);
 
   const handleDeleteProduct = async (productId: string) => {
