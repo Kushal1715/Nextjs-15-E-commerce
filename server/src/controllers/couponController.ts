@@ -5,7 +5,7 @@ import { prisma } from "../server";
 export const createCoupon = async (
   req: AuthenticatedRequest,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { code, discountPercent, startDate, endDate, usageLimit } = req.body;
 
@@ -20,14 +20,14 @@ export const createCoupon = async (
       },
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       message: "new coupon created successfully",
       coupon: newCoupon,
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       error: "failed to create a coupon",
     });
@@ -37,19 +37,19 @@ export const createCoupon = async (
 export const fetchAllCoupons = async (
   req: AuthenticatedRequest,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const coupons = prisma.coupon.findMany({
       orderBy: { createdAt: "asc" },
     });
 
-    return res.status(201).json({
+    res.status(201).json({
       success: true,
       coupons,
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       error: "failed to create a coupon",
     });
@@ -59,7 +59,7 @@ export const fetchAllCoupons = async (
 export const deleteCoupon = async (
   req: AuthenticatedRequest,
   res: Response
-) => {
+): Promise<void> => {
   try {
     const { id } = req.params;
 
@@ -74,7 +74,7 @@ export const deleteCoupon = async (
     });
   } catch (error) {
     console.log(error);
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
       error: "failed to create a coupon",
     });
