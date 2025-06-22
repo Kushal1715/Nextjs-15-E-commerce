@@ -7,3 +7,14 @@ export interface Coupon {
   usageLimit: number;
   usageCount: number;
 }
+
+interface CouponStore {
+  coupons: Coupon[];
+  isLoading: boolean;
+  error: string | null;
+  createCoupon: (
+    coupon: Omit<Coupon, "id" | "usageCount">
+  ) => Promise<Coupon | null>;
+  fetchAllCoupons: () => Promise<void>;
+  deleteCoupon: (id: string) => Promise<boolean>;
+}
