@@ -50,7 +50,7 @@ export const useCouponStore = create<CouponStore>((set, get) => ({
         `${API_ROUTES.COUPONS}/fetch-all-coupons`,
         { withCredentials: true }
       );
-      set({ coupons: response.data.couponList, isLoading: false });
+      set({ coupons: response.data.coupons, isLoading: false });
     } catch (e) {
       set({ isLoading: false, error: "Failed to fetch coupons" });
     }
@@ -58,9 +58,12 @@ export const useCouponStore = create<CouponStore>((set, get) => ({
   deleteCoupon: async (id: string) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.delete(`${API_ROUTES.COUPONS}/${id}`, {
-        withCredentials: true,
-      });
+      const response = await axios.delete(
+        `${API_ROUTES.COUPONS}/delete-coupon/${id}`,
+        {
+          withCredentials: true,
+        }
+      );
       set({ isLoading: false });
       return response.data.success;
     } catch (error) {
