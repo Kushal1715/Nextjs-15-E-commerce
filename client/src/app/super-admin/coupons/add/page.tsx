@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCouponStore } from "@/store/useCouponStore";
@@ -57,13 +58,13 @@ const SuperAdminManageCouponsPage = () => {
             </h1>
           </div>
           <div>
-            <button
+            <Button
               className="bg-black px-4 md:px-6 py-2 md:py-3 text-white rounded-lg hover:bg-gray-800 transition-colors cursor-pointer"
               type="submit"
               disabled={isLoading}
             >
               Create Coupon
-            </button>
+            </Button>
           </div>
         </div>
         <div className="bg-white flex flex-col mt-8 space-y-8">

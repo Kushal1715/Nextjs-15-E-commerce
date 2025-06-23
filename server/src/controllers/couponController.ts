@@ -39,13 +39,13 @@ export const fetchAllCoupons = async (
   res: Response
 ): Promise<void> => {
   try {
-    const coupons = prisma.coupon.findMany({
+    const coupons = await prisma.coupon.findMany({
       orderBy: { createdAt: "asc" },
     });
 
     res.status(201).json({
       success: true,
-      coupons,
+      coupons: coupons,
     });
   } catch (error) {
     console.log(error);
