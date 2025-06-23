@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCouponStore } from "@/store/useCouponStore";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
@@ -13,7 +14,8 @@ const SuperAdminManageCouponsPage = () => {
     endDate: "",
     usageLimit: "",
   });
-  const { isLoading } = useCouponStore();
+  const { isLoading, createCoupon } = useCouponStore();
+  const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormState((prev) => ({
@@ -37,8 +39,14 @@ const SuperAdminManageCouponsPage = () => {
         : 0,
       usageLimit: formState.usageLimit ? parseInt(formState.usageLimit) : 1,
     };
+
+    const result = await createCoupon(couponData);
+
+    if (result) {
+      toast("Coupon created successfully");
+      router.push("/super-admin/coupons/list");
+    }
   };
-  console.log(formState);
   return (
     <div className="p-4">
       <form onSubmit={handleSubmit}>
