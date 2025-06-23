@@ -12,10 +12,11 @@ import { useCouponStore } from "@/store/useCouponStore";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
+import { toast } from "sonner";
 
 const SuperAdminCouponsListingPage = () => {
   const router = useRouter();
-  const { coupons, fetchAllCoupons } = useCouponStore();
+  const { coupons, fetchAllCoupons, deleteCoupon } = useCouponStore();
 
   useEffect(() => {
     const fetchCoupons = async () => {
@@ -27,7 +28,14 @@ const SuperAdminCouponsListingPage = () => {
 
   console.log(coupons);
 
-  const handleDeleteCoupon = (couponId: string) => {};
+  const handleDeleteCoupon = async (couponId: string) => {
+    const isDeleted = await deleteCoupon(couponId);
+
+    if (isDeleted) {
+      await fetchAllCoupons();
+      toast("Couon deleted successfully");
+    }
+  };
   return (
     <div className="p-6">
       <div className="flex flex-col gap-6">
@@ -47,6 +55,8 @@ const SuperAdminCouponsListingPage = () => {
                   <TableHead>Start Date</TableHead>
                   <TableHead>End Date</TableHead>
                   <TableHead>Usage Limit </TableHead>
+                  <TableHead>Usage Count </TableHead>
+
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -62,13 +72,20 @@ const SuperAdminCouponsListingPage = () => {
                     </TableCell>
                     <TableCell>{coupon.discountPercent}%</TableCell>
                     <TableCell>
-                      <p>{coupon.startDate}</p>
+                      <p>
+                        {new Date(coupon.startDate).toISOString().split("T")[0]}
+                      </p>
                     </TableCell>
                     <TableCell>
-                      <p>{coupon.endDate}</p>
+                      <p>
+                        {new Date(coupon.endDate).toISOString().split("T")[0]}
+                      </p>
                     </TableCell>
                     <TableCell>
                       <p>{coupon.usageLimit}</p>
+                    </TableCell>
+                    <TableCell>
+                      <p>{coupon.usageCount}</p>
                     </TableCell>
 
                     <TableCell>
