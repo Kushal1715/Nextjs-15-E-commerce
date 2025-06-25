@@ -54,3 +54,47 @@ export const addFeatureBanners = async (
     });
   }
 };
+
+export const fetchAllFeatureBanners = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const featureBanners = await prisma.featureBanner.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.status(200).json({
+      success: true,
+      featureBanners,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "failed to fetch feature banners",
+    });
+  }
+};
+
+export const fetchFeatureProducts = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const featuredProducts = await prisma.product.findMany({
+      where: { isFeatured: true },
+    });
+
+    res.status(200).json({
+      success: true,
+      featuredProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "failed to fetch feature products",
+    });
+  }
+};
