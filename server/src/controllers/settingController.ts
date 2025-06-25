@@ -114,6 +114,7 @@ export const updateFeaturedProducts = async (
     });
   }
 };
+
 export const fetchFeatureProducts = async (
   req: AuthenticatedRequest,
   res: Response
