@@ -77,6 +77,43 @@ export const fetchAllFeatureBanners = async (
   }
 };
 
+export const updateFeaturedProducts = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const { productIds } = req.body;
+
+    if (!Array.isArray(productIds) && productIds.length > 8) {
+      res.status(400).json({
+        success: false,
+        error: "Invalid product Ids or too many products",
+      });
+      return;
+    }
+
+    await prisma.product.updateMany({
+      data: { isFeatured: false },
+    });
+
+    const updatedProducts = await prisma.product.updateMany({
+      where: { id: { in: productIds } },
+      data: { isFeatured: true },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "featured products updated successfully",
+      updatedProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "failed to update featured products",
+    });
+  }
+};
 export const fetchFeatureProducts = async (
   req: AuthenticatedRequest,
   res: Response
