@@ -1,4 +1,5 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -54,8 +55,8 @@ const SuperAdminCouponsListingPage = () => {
                   <TableHead>Discount Percentage</TableHead>
                   <TableHead>Start Date</TableHead>
                   <TableHead>End Date</TableHead>
-                  <TableHead>Usage Limit </TableHead>
-                  <TableHead>Usage Count </TableHead>
+                  <TableHead>Usage</TableHead>
+                  <TableHead>Status</TableHead>
 
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
@@ -82,10 +83,16 @@ const SuperAdminCouponsListingPage = () => {
                       </p>
                     </TableCell>
                     <TableCell>
-                      <p>{coupon.usageLimit}</p>
+                      <p>
+                        {coupon.usageCount}/{coupon.usageLimit}
+                      </p>
                     </TableCell>
                     <TableCell>
-                      <p>{coupon.usageCount}</p>
+                      <Badge>
+                        {coupon.usageCount >= coupon.usageLimit
+                          ? "Expired"
+                          : "Active"}
+                      </Badge>
                     </TableCell>
 
                     <TableCell>
