@@ -12,9 +12,9 @@ export const addFeatureBanners = async (
     const files = req.files as Express.Multer.File[];
 
     if (!files || files.length === 0) {
-      res.status(404).json({
+      res.status(400).json({
         success: false,
-        error: "no files found",
+        error: "No files uploaded",
       });
       return;
     }
@@ -25,22 +25,26 @@ export const addFeatureBanners = async (
       })
     );
 
-    const uploadResults = await Promise.all(uploadPromises);
+    const uploadedResults = await Promise.all(uploadPromises);
 
-    const banners = await Promise.all(
-      uploadResults.map((res) =>
+    const banner = await Promise.all(
+      uploadedResults.map((result) =>
         prisma.featureBanner.create({
           data: {
-            imageUrl: res.secure_url,
+            imageUrl: result.secure_url,
           },
         })
       )
     );
 
+    // Clean up local files after upload
+
     files.forEach((file) => fs.unlinkSync(file.path));
+
     res.status(201).json({
       success: true,
-      banners,
+      message: "Feature banners added successfully",
+      banners: banner,
     });
   } catch (error) {
     console.log(error);
