@@ -12,9 +12,11 @@ const Home = () => {
 
   useEffect(() => {
     fetchFeatureBanners();
+    fetchFeaturedProducts();
   }, [fetchFeatureBanners, fetchFeaturedProducts]);
 
   console.log(featureBanners);
+  console.log(featuredProducts, "featuredProducts");
   return <div>Home</div>;
 };
 
