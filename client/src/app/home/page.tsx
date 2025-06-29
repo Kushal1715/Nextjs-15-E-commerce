@@ -17,7 +17,19 @@ const Home = () => {
 
   console.log(featureBanners);
   console.log(featuredProducts, "featuredProducts");
-  return <div>Home</div>;
+  return (
+    <div className="min-h-screen">
+      <div>
+        {featureBanners.map((banner, index) => (
+          <div key={index} className="relative w-full h-96">
+            <div className="absolute">
+              <img src={banner.imageUrl} alt={`image ${index}`} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Home;
