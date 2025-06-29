@@ -26,7 +26,7 @@ const Home = () => {
   console.log(featureBanners);
   console.log(featuredProducts, "featuredProducts");
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen">
       <div className="relative h-[600px] overflow-hidden">
         {featureBanners.map((banner, index) => (
           <div key={index} className="">
@@ -39,6 +39,19 @@ const Home = () => {
             </div>
           </div>
         ))}
+        <div className="absolute bottom-0 left-1/2 flex gap-2">
+          {featureBanners.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`cursor-pointer ${
+                index === currentSlide
+                  ? "bg-white w-4 h-4 rounded-full"
+                  : "bg-gray-600 w-2 h-2 rounded-full"
+              }`}
+            ></button>
+          ))}
+        </div>
       </div>
     </div>
   );
