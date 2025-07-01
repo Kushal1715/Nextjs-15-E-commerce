@@ -55,15 +55,19 @@ const Home = () => {
   console.log(featuredProducts, "featuredProducts");
   return (
     <div className="min-h-screen">
-      <div className="relative h-[600px] overflow-hidden">
+      <div className="relative min-h-[600px] overflow-hidden">
         {featureBanners.map((banner, index) => (
-          <div key={index} className="">
+          <div key={index} className="h-full">
             <div
               className={`absolute ${
                 index === currentSlide ? "opacity-100" : "opacity-0"
               } transition-opacity duration-500`}
             >
-              <img src={banner.imageUrl} alt={`image ${index}`} />
+              <img
+                src={banner.imageUrl}
+                alt={`image ${index}`}
+                className="h-full"
+              />
             </div>
           </div>
         ))}
