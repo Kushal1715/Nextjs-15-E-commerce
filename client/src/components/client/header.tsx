@@ -38,7 +38,7 @@ const menuItems = [
   },
   {
     title: "Products",
-    link: "/products",
+    link: "/listing",
   },
 ];
 
@@ -67,7 +67,13 @@ const Header = () => {
           </ul>
         </div>
         <div className="hidden lg:flex items-center space-x-4">
-          <div className="relative">
+          <div
+            className="relative cursor-pointer"
+            onClick={() => {
+              router.push("/cart");
+              setShowSheet(false);
+            }}
+          >
             <ShoppingCart />
             <span className="absolute -top-0.5 -right-0.5 bg-black rounded-full text-white h-4 w-4 p-1 text-xs flex items-center justify-center">
               0
@@ -80,8 +86,14 @@ const Header = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40" align="start">
-              <DropdownMenuGroup>
-                <DropdownMenuItem>Your Account</DropdownMenuItem>
+              <DropdownMenuGroup onClick={() => setShowSheet(false)}>
+                <DropdownMenuItem
+                  onClick={() => {
+                    router.push("/account");
+                  }}
+                >
+                  Your Account
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={handleLogout}>
                   Logout
                 </DropdownMenuItem>
@@ -117,7 +129,13 @@ const Header = () => {
                   </Link>
                 ))}
                 <div className="flex items-center space-x-4">
-                  <div className="relative">
+                  <div
+                    className="relative cursor-pointer"
+                    onClick={() => {
+                      router.push("/cart");
+                      setShowSheet(false);
+                    }}
+                  >
                     <ShoppingCart />
                     <span className="absolute -top-0.5 -right-0.5 bg-black rounded-full text-white h-4 w-4 p-1 text-xs flex items-center justify-center">
                       0
@@ -131,7 +149,11 @@ const Header = () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent className="w-40" align="start">
                       <DropdownMenuGroup onClick={() => setShowSheet(false)}>
-                        <DropdownMenuItem>Your Account</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => router.push("/account")}
+                        >
+                          Your Account
+                        </DropdownMenuItem>
                         <DropdownMenuItem onClick={handleLogout}>
                           Logout
                         </DropdownMenuItem>
