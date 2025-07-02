@@ -59,9 +59,9 @@ const Home = () => {
         {featureBanners.map((banner, index) => (
           <div key={index} className="h-full">
             <div
-              className={`absolute ${
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
                 index === currentSlide ? "opacity-100" : "opacity-0"
-              } transition-opacity duration-500`}
+              }`}
             >
               <img
                 src={banner.imageUrl}
