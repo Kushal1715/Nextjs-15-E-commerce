@@ -29,6 +29,7 @@ const ProductListingPage = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
 
   const handleSortChange = (value: string) => {
     const sortValues = value.split("-");
@@ -47,6 +48,7 @@ const ProductListingPage = () => {
   console.log(selectedCategories);
   console.log(selectedBrands);
   console.log(selectedSizes);
+  console.log(selectedColors);
 
   const handleBrandChange = (brand: string) => {
     setSelectedBrands((prev) =>
@@ -57,6 +59,12 @@ const ProductListingPage = () => {
   const handleSizeChange = (size: string) => {
     setSelectedSizes((prev) =>
       prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+    );
+  };
+
+  const handleColorChange = (color: string) => {
+    setSelectedColors((prev) =>
+      prev.includes(color) ? prev.filter((s) => s !== color) : [...prev, color]
     );
   };
 
@@ -116,7 +124,14 @@ const ProductListingPage = () => {
             {colors.map((color) => (
               <div
                 key={color.class}
-                className={`w-6 h-6 rounded-full ${color.class} cursor-pointer`}
+                className={`w-6 h-6 rounded-full ${
+                  color.class
+                } cursor-pointer ${
+                  selectedColors.includes(color.name)
+                    ? "ring-offset-2 ring-1"
+                    : ""
+                }`}
+                onClick={() => handleColorChange(color.name)}
               ></div>
             ))}
           </div>
