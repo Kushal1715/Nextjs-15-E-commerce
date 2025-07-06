@@ -20,11 +20,12 @@ import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { categories } from "@/utils/config";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
 
 const ProductListingPage = () => {
   const FilterSection = () => {
     return (
-      <div>
+      <div className="space-y-6">
         <div>
           <h1 className="font-bold text-lg">Categories</h1>
           <div className="space-y-3 mt-3">
@@ -34,6 +35,21 @@ const ProductListingPage = () => {
                 <Label>{category}</Label>
               </div>
             ))}
+          </div>
+        </div>
+        <div>
+          <h1 className="font-bold text-lg">Price Range</h1>
+          <div className=" mt-3">
+            <Slider
+              defaultValue={[0, 100000]}
+              className="w-full"
+              max={100000}
+              step={1}
+            />
+          </div>
+          <div className="flex items-center justify-between font-bold mt-1">
+            <span>$100</span>
+            <span>$100</span>
           </div>
         </div>
       </div>
@@ -107,7 +123,7 @@ const ProductListingPage = () => {
           </div>
         </div>
         <div className="mt-6 flex gap-8">
-          <div>
+          <div className="w-64 hidden lg:flex flex-col">
             <FilterSection />
           </div>
         </div>
