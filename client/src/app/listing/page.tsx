@@ -27,6 +27,8 @@ const ProductListingPage = () => {
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
 
   const handleSortChange = (value: string) => {
     const sortValues = value.split("-");
@@ -43,6 +45,20 @@ const ProductListingPage = () => {
     );
   };
   console.log(selectedCategories);
+  console.log(selectedBrands);
+  console.log(selectedSizes);
+
+  const handleBrandChange = (brand: string) => {
+    setSelectedBrands((prev) =>
+      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+    );
+  };
+
+  const handleSizeChange = (size: string) => {
+    setSelectedSizes((prev) =>
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+    );
+  };
 
   const FilterSection = () => {
     return (
@@ -68,7 +84,12 @@ const ProductListingPage = () => {
           <div className="space-y-3 mt-3">
             {brands.map((brand) => (
               <div key={brand} className="flex items-center gap-2">
-                <Checkbox id={brand} className="border-black" />
+                <Checkbox
+                  id={brand}
+                  className="border-black"
+                  checked={selectedBrands.includes(brand)}
+                  onCheckedChange={() => handleBrandChange(brand)}
+                />
                 <Label>{brand}</Label>
               </div>
             ))}
@@ -78,7 +99,12 @@ const ProductListingPage = () => {
           <h1 className="font-bold text-lg">Size</h1>
           <div className="flex items-center flex-wrap gap-2 mt-3">
             {sizes.map((size) => (
-              <Button key={size} className="cursor-pointer">
+              <Button
+                key={size}
+                className={`cursor-pointer border-black`}
+                onClick={() => handleSizeChange(size)}
+                variant={selectedSizes.includes(size) ? "default" : "outline"}
+              >
                 {size}
               </Button>
             ))}
