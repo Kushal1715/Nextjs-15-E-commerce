@@ -18,7 +18,7 @@ import {
 import { Filter, SlidersHorizontal } from "lucide-react";
 import React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { categories } from "@/utils/config";
+import { brands, categories, colors, sizes } from "@/utils/config";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 
@@ -34,6 +34,38 @@ const ProductListingPage = () => {
                 <Checkbox id={category} className="border-black" />
                 <Label>{category}</Label>
               </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h1 className="font-bold text-lg">Brand</h1>
+          <div className="space-y-3 mt-3">
+            {brands.map((brand) => (
+              <div key={brand} className="flex items-center gap-2">
+                <Checkbox id={brand} className="border-black" />
+                <Label>{brand}</Label>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h1 className="font-bold text-lg">Size</h1>
+          <div className="flex items-center flex-wrap gap-2 mt-3">
+            {sizes.map((size) => (
+              <Button key={size} className="cursor-pointer">
+                {size}
+              </Button>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h1 className="font-bold text-lg">Colors</h1>
+          <div className="flex items-center flex-wrap gap-2 mt-3">
+            {colors.map((color) => (
+              <div
+                key={color.class}
+                className={`w-6 h-6 rounded-full ${color.class} cursor-pointer`}
+              ></div>
             ))}
           </div>
         </div>
@@ -88,10 +120,13 @@ const ProductListingPage = () => {
                     Filter
                   </Button>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px] max-h-[600px] overflow-auto">
                   <DialogHeader>
-                    <DialogTitle>Filter</DialogTitle>
+                    <DialogTitle className="font-bold text-2xl">
+                      Filter
+                    </DialogTitle>
                   </DialogHeader>
+                  <FilterSection />
                 </DialogContent>
               </Dialog>
             </div>
