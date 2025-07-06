@@ -179,3 +179,19 @@ export const deleteProductByAdmin = async (
     });
   }
 };
+
+export const fetchProductsForClient = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: "something went wrong",
+    });
+  }
+};
