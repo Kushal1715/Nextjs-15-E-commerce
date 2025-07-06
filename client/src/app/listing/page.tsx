@@ -30,6 +30,7 @@ const ProductListingPage = () => {
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState([0, 100000]);
 
   const handleSortChange = (value: string) => {
     const sortValues = value.split("-");
@@ -144,11 +145,13 @@ const ProductListingPage = () => {
               className="w-full"
               max={100000}
               step={1}
+              value={priceRange}
+              onValueChange={(value) => setPriceRange(value)}
             />
           </div>
           <div className="flex items-center justify-between font-bold mt-1">
-            <span>$100</span>
-            <span>$100</span>
+            <span>${priceRange[0]}</span>
+            <span>${priceRange[1]}</span>
           </div>
         </div>
       </div>
