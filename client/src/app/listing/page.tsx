@@ -26,12 +26,23 @@ import { Slider } from "@/components/ui/slider";
 const ProductListingPage = () => {
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleSortChange = (value: string) => {
     const sortValues = value.split("-");
     setSortBy(sortValues[0]);
     setSortOrder(sortValues[1] as "asc" | "desc");
   };
+
+  const handleCategoryChange = (category: string) => {
+    console.log(category);
+    setSelectedCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category]
+    );
+  };
+  console.log(selectedCategories);
 
   const FilterSection = () => {
     return (
@@ -41,7 +52,12 @@ const ProductListingPage = () => {
           <div className="space-y-3 mt-3">
             {categories.map((category) => (
               <div key={category} className="flex items-center gap-2">
-                <Checkbox id={category} className="border-black" />
+                <Checkbox
+                  id={category}
+                  className="border-black"
+                  checked={selectedCategories.includes(category)}
+                  onCheckedChange={() => handleCategoryChange(category)}
+                />
                 <Label>{category}</Label>
               </div>
             ))}
