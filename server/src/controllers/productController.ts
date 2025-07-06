@@ -187,6 +187,26 @@ export const fetchProductsForClient = async (
   try {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
+
+    const categories = ((req.query.categories as string) || "")
+      .split(",")
+      .filter(Boolean);
+    const brands = ((req.query.brands as string) || "")
+      .split(",")
+      .filter(Boolean);
+    const sizes = ((req.query.sizes as string) || "")
+      .split(",")
+      .filter(Boolean);
+    const colors = ((req.query.colors as string) || "")
+      .split(",")
+      .filter(Boolean);
+
+    const minPrice = parseFloat(req.query.minPrice as string) || 0;
+    const maxPrice =
+      parseFloat(req.query.maxPrice as string) || Number.MAX_SAFE_INTEGER;
+
+    const sortBy = req.query.sortBy || "createdAt";
+    const sortOrder = (req.query.sortOrder as "async" | "desc") || "desc";
   } catch (error) {
     console.log(error);
     res.status(500).json({
