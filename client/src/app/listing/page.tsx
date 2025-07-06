@@ -15,10 +15,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SlidersHorizontal } from "lucide-react";
+import { Filter, SlidersHorizontal } from "lucide-react";
 import React from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { categories } from "@/utils/config";
+import { Label } from "@/components/ui/label";
 
 const ProductListingPage = () => {
+  const FilterSection = () => {
+    return (
+      <div>
+        <div>
+          <h1 className="font-bold text-lg">Categories</h1>
+          <div className="space-y-3 mt-3">
+            {categories.map((category) => (
+              <div key={category} className="flex items-center gap-2">
+                <Checkbox id={category} className="border-black" />
+                <Label>{category}</Label>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="min-h-screen">
       <div className="relative h-[300px]">
@@ -84,6 +104,11 @@ const ProductListingPage = () => {
                 </SelectContent>
               </Select>
             </div>
+          </div>
+        </div>
+        <div className="mt-6 flex gap-8">
+          <div>
+            <FilterSection />
           </div>
         </div>
       </div>
