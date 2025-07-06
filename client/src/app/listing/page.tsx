@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,13 +17,22 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Filter, SlidersHorizontal } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { brands, categories, colors, sizes } from "@/utils/config";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 
 const ProductListingPage = () => {
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  const handleSortChange = (value: string) => {
+    const sortValues = value.split("-");
+    setSortBy(sortValues[0]);
+    setSortOrder(sortValues[1] as "asc" | "desc");
+  };
+
   const FilterSection = () => {
     return (
       <div className="space-y-6">
@@ -133,7 +143,10 @@ const ProductListingPage = () => {
 
             {/* to filter using desktop  */}
             <div className="hidden lg:flex">
-              <Select>
+              <Select
+                value={sortBy + "-" + sortOrder}
+                onValueChange={(value) => handleSortChange(value)}
+              >
                 <SelectTrigger className="">
                   <SelectValue placeholder="Sort By" />
                 </SelectTrigger>
