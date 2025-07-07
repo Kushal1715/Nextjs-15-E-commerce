@@ -3,6 +3,7 @@ import cloudinary from "../config/cloudinary";
 import fs from "fs";
 import { AuthenticatedRequest } from "../middleware/authMiddleware";
 import { prisma } from "../server";
+import { Prisma } from "@prisma/client";
 
 //create a product
 export const createProduct = async (
@@ -207,6 +208,46 @@ export const fetchProductsForClient = async (
 
     const sortBy = req.query.sortBy || "createdAt";
     const sortOrder = (req.query.sortOrder as "async" | "desc") || "desc";
+
+    const skip = (page - 1) * limit;
+
+    const where: Prisma.ProductWhereInput = {
+      AND: [
+        categories.length > 0
+          ? {
+              category: {
+                in: categories,
+                mode: "insensitive",
+              },
+            }
+          : {},
+        brands.length > 0
+          ? {
+              brand: {
+                in: brands,
+                mode: "insensitive",
+              },
+            }
+          : {},
+        sizes.length > 0
+          ? {
+              sizes: {
+                hasSome: sizes,
+              },
+            }
+          : {},
+        colors.length > 0
+          ? {
+              colors: {
+                hasSome: colors,
+              },
+            }
+          : {},
+        {
+          price: { gte: minPrice, lte: maxPrice },
+        },
+      ],
+    };
   } catch (error) {
     console.log(error);
     res.status(500).json({
