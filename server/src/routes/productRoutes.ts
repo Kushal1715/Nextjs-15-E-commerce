@@ -6,6 +6,7 @@ import {
   deleteProductByAdmin,
   fetchAllProductsForAdmin,
   fetchProductById,
+  fetchProductsForClient,
   updateProductByAdmin,
 } from "../controllers/productController";
 
@@ -24,6 +25,8 @@ router.get(
   isSuperAdmin,
   fetchAllProductsForAdmin
 );
+
+router.get("/fetch-client-products", authenticateJwt, fetchProductsForClient);
 
 router.get("/:id", authenticateJwt, fetchProductById);
 

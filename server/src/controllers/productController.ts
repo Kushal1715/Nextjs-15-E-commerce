@@ -207,7 +207,7 @@ export const fetchProductsForClient = async (
       parseFloat(req.query.maxPrice as string) || Number.MAX_SAFE_INTEGER;
 
     const sortBy = (req.query.sortBy as string) || "createdAt";
-    const sortOrder = (req.query.sortOrder as "async" | "desc") || "desc";
+    const sortOrder = (req.query.sortOrder as "asc" | "desc") || "desc";
 
     const skip = (page - 1) * limit;
 
