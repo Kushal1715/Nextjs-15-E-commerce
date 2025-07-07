@@ -206,7 +206,7 @@ export const fetchProductsForClient = async (
     const maxPrice =
       parseFloat(req.query.maxPrice as string) || Number.MAX_SAFE_INTEGER;
 
-    const sortBy = req.query.sortBy || "createdAt";
+    const sortBy = (req.query.sortBy as string) || "createdAt";
     const sortOrder = (req.query.sortOrder as "async" | "desc") || "desc";
 
     const skip = (page - 1) * limit;
@@ -248,6 +248,26 @@ export const fetchProductsForClient = async (
         },
       ],
     };
+
+    const [products, total] = await Promise.all([
+      prisma.product.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: {
+          [sortBy]: sortOrder,
+        },
+      }),
+      prisma.product.count({ where }),
+    ]);
+
+    res.status(200).json({
+      success: true,
+      products,
+      totalProducts: total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
