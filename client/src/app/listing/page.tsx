@@ -45,7 +45,7 @@ const ProductListingPage = () => {
   useEffect(() => {
     fetchProductsForClient({
       page: currentPage,
-      limit: 2,
+      limit: 5,
       categories: selectedCategories,
       brands: selectedBrands,
       sizes: selectedSizes,
@@ -264,6 +264,38 @@ const ProductListingPage = () => {
         <div className="mt-6 flex gap-8">
           <div className="w-64 hidden lg:flex flex-col">
             <FilterSection />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {products.map((product) => (
+              <div key={product.id}>
+                <div className="relative aspect-[3/4] mb-4 bg-gray-100 overflow-hidden">
+                  <img
+                    src={product.images[0]}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  />
+                  <div className="absolute flex items-center justify-center bg-gray-300 inset-0 opacity-0 hover:opacity-100">
+                    <Button className="hover:bg-white hover:text-black">
+                      Quick View
+                    </Button>
+                  </div>
+                </div>
+                <div className="font-bold text-lg">
+                  <h1>{product.name}</h1>
+                  <div className="flex items-center justify-between ">
+                    <span>${product.price}</span>
+                    <div className="flex items-center gap-2">
+                      {product.colors.map((color, index) => (
+                        <div
+                          key={index}
+                          className={`w-4 h-4 rounded-full cursor-pointer`}
+                          style={{ background: color }}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
