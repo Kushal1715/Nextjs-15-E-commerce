@@ -106,6 +106,7 @@ export const useProductStore = create<ProductState>((set, get) => ({
           withCredentials: true,
         }
       );
+      console.log(response.data);
 
       set({
         isLoading: false,

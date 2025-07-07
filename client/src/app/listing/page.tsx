@@ -17,11 +17,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Filter, SlidersHorizontal } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { brands, categories, colors, sizes } from "@/utils/config";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { useProductStore } from "@/store/productStore";
 
 const ProductListingPage = () => {
   const [sortBy, setSortBy] = useState("createdAt");
@@ -32,6 +33,40 @@ const ProductListingPage = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 100000]);
 
+  const {
+    products,
+    totalProducts,
+    currentPage,
+    totalPages,
+    fetchProductsForClient,
+  } = useProductStore();
+
+  useEffect(() => {
+    fetchProductsForClient({
+      page: currentPage,
+      limit: 2,
+      categories: selectedCategories,
+      brands: selectedBrands,
+      sizes: selectedSizes,
+      colors: selectedColors,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
+      sortBy: sortBy,
+      sortOrder: sortOrder,
+    });
+  }, [
+    currentPage,
+    sortBy,
+    sortOrder,
+    selectedCategories,
+    selectedBrands,
+    selectedSizes,
+    selectedColors,
+    priceRange,
+  ]);
+
+  console.log(products);
+
   const handleSortChange = (value: string) => {
     const sortValues = value.split("-");
     setSortBy(sortValues[0]);
@@ -39,17 +74,12 @@ const ProductListingPage = () => {
   };
 
   const handleCategoryChange = (category: string) => {
-    console.log(category);
     setSelectedCategories((prev) =>
       prev.includes(category)
         ? prev.filter((c) => c !== category)
         : [...prev, category]
     );
   };
-  console.log(selectedCategories);
-  console.log(selectedBrands);
-  console.log(selectedSizes);
-  console.log(selectedColors);
 
   const handleBrandChange = (brand: string) => {
     setSelectedBrands((prev) =>
