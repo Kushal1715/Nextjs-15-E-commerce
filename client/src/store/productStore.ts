@@ -45,6 +45,7 @@ interface ProductState {
     productData: FormData
   ) => Promise<Product | null>;
   deleteProductByAdmin: (id: string) => Promise<boolean>;
+  updateCurrentPage: (page: number) => void;
 }
 
 export const useProductStore = create<ProductState>((set, get) => ({
@@ -161,5 +162,8 @@ export const useProductStore = create<ProductState>((set, get) => ({
       set({ isLoading: false, error: "Failed to delete product" });
       return false;
     }
+  },
+  updateCurrentPage: (page) => {
+    set({ currentPage: page });
   },
 }));

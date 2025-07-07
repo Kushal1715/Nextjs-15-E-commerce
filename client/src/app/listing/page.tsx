@@ -39,6 +39,7 @@ const ProductListingPage = () => {
     currentPage,
     totalPages,
     fetchProductsForClient,
+    updateCurrentPage,
   } = useProductStore();
 
   useEffect(() => {
