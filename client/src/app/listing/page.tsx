@@ -28,6 +28,7 @@ import { brands, categories, colors, sizes } from "@/utils/config";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useProductStore } from "@/store/productStore";
+import { useRouter } from "next/navigation";
 
 const ProductListingPage = () => {
   const [sortBy, setSortBy] = useState("createdAt");
@@ -37,6 +38,7 @@ const ProductListingPage = () => {
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState([0, 100000]);
+  const router = useRouter();
 
   const {
     products,
@@ -280,14 +282,17 @@ const ProductListingPage = () => {
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {products.map((product) => (
-                <div key={product.id} className="h-full">
+                <div key={product.id}>
                   <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
                     <img
                       src={product.images[0]}
                       className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     />
                     <div className="absolute flex items-center justify-center bg-gray-300 inset-0 opacity-0 hover:opacity-100">
-                      <Button className="hover:bg-white hover:text-black">
+                      <Button
+                        className="hover:bg-white hover:text-black cursor-pointer"
+                        onClick={() => router.push(`/listing/${product.id}`)}
+                      >
                         Quick View
                       </Button>
                     </div>
