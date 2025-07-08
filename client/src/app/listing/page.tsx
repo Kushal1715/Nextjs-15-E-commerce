@@ -42,10 +42,12 @@ const ProductListingPage = () => {
     updateCurrentPage,
   } = useProductStore();
 
+  console.log(totalPages, "total pages");
+
   useEffect(() => {
     fetchProductsForClient({
       page: currentPage,
-      limit: 5,
+      limit: 3,
       categories: selectedCategories,
       brands: selectedBrands,
       sizes: selectedSizes,
