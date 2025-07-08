@@ -16,7 +16,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Filter, SlidersHorizontal } from "lucide-react";
+import {
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+  Filter,
+  SlidersHorizontal,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { brands, categories, colors, sizes } from "@/utils/config";
@@ -100,6 +105,10 @@ const ProductListingPage = () => {
     setSelectedColors((prev) =>
       prev.includes(color) ? prev.filter((s) => s !== color) : [...prev, color]
     );
+  };
+
+  const handlePage = (page: number) => {
+    updateCurrentPage(page);
   };
 
   const FilterSection = () => {
@@ -190,6 +199,7 @@ const ProductListingPage = () => {
       </div>
     );
   };
+
   return (
     <div className="min-h-screen">
       <div className="relative h-[300px]">
@@ -267,37 +277,69 @@ const ProductListingPage = () => {
           <div className="w-64 hidden lg:flex flex-col">
             <FilterSection />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {products.map((product) => (
-              <div key={product.id}>
-                <div className="relative aspect-[3/4] mb-4 bg-gray-100 overflow-hidden">
-                  <img
-                    src={product.images[0]}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <div className="absolute flex items-center justify-center bg-gray-300 inset-0 opacity-0 hover:opacity-100">
-                    <Button className="hover:bg-white hover:text-black">
-                      Quick View
-                    </Button>
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {products.map((product) => (
+                <div key={product.id} className="h-full">
+                  <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
+                    <img
+                      src={product.images[0]}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute flex items-center justify-center bg-gray-300 inset-0 opacity-0 hover:opacity-100">
+                      <Button className="hover:bg-white hover:text-black">
+                        Quick View
+                      </Button>
+                    </div>
                   </div>
-                </div>
-                <div className="font-bold text-lg">
-                  <h1>{product.name}</h1>
-                  <div className="flex items-center justify-between ">
-                    <span>${product.price}</span>
-                    <div className="flex items-center gap-2">
-                      {product.colors.map((color, index) => (
-                        <div
-                          key={index}
-                          className={`w-4 h-4 rounded-full cursor-pointer`}
-                          style={{ background: color }}
-                        ></div>
-                      ))}
+                  <div className="font-bold text-lg">
+                    <h1>{product.name}</h1>
+                    <div className="flex items-center justify-between ">
+                      <span>${product.price}</span>
+                      <div className="flex items-center gap-2">
+                        {product.colors.map((color, index) => (
+                          <div
+                            key={index}
+                            className={`w-4 h-4 rounded-full cursor-pointer`}
+                            style={{ background: color }}
+                          ></div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <div className="flex items-center justify-center">
+              <Button
+                variant="outline"
+                size={"icon"}
+                disabled={currentPage === 1}
+                onClick={() => handlePage(currentPage - 1)}
+              >
+                <ChevronsLeftIcon />
+              </Button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <Button
+                    key={page}
+                    variant={currentPage === page ? "default" : "outline"}
+                    className="cursor-pointer"
+                    onClick={() => handlePage(page)}
+                  >
+                    {page}
+                  </Button>
+                )
+              )}
+              <Button
+                variant="outline"
+                size={"icon"}
+                disabled={currentPage === totalPages}
+                onClick={() => handlePage(currentPage + 1)}
+              >
+                <ChevronsRightIcon />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
