@@ -1,7 +1,7 @@
 import React from "react";
 
 const ProductDetailsSkeleton = () => {
-  return <div>ProductDetailsSkeleton</div>;
+  return <div>This is a skeleton for product details page</div>;
 };
 
 export default ProductDetailsSkeleton;
