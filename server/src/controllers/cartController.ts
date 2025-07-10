@@ -2,7 +2,7 @@ import { Response } from "express";
 import { AuthenticatedRequest } from "../middleware/authMiddleware";
 import { prisma } from "../server";
 
-export const AddToCart = async (
+export const addToCart = async (
   req: AuthenticatedRequest,
   res: Response
 ): Promise<void> => {
