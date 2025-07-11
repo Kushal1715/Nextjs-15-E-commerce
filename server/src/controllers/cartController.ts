@@ -68,3 +68,64 @@ export const addToCart = async (
     });
   }
 };
+
+export const getCart = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: "user is not authenticated",
+      });
+      return;
+    }
+
+    const cart = await prisma.cart.findUnique({
+      where: { userId },
+      select: { items: true },
+    });
+
+    if (!cart) {
+      res.status(404).json({
+        success: false,
+        message: "cart not found",
+      });
+      return;
+    }
+
+    const cartItemsWithProducts = await Promise.all(
+      cart?.items.map(async (item) => {
+        const product = await prisma.product.findUnique({
+          where: { id: item.productId },
+        });
+
+        return {
+          id: item.id,
+          productId: item?.productId,
+          name: product?.name,
+          price: product?.price,
+          image: product?.images[0],
+          color: item.color,
+          size: item.size,
+          quantity: item.quantity,
+        };
+      })
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "cart items fetched successfully",
+      data: cartItemsWithProducts,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "failed to get cart items",
+    });
+  }
+};
