@@ -160,3 +160,59 @@ export const deleteFromCart = async (
     });
   }
 };
+
+export const updateCartItemQuantity = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+    const { id } = req.params;
+    const { quantity } = req.body;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: "user is not authenticated",
+      });
+      return;
+    }
+
+    const updateQuantity = await prisma.cartItem.update({
+      where: { id, cart: { userId } },
+      data: { quantity },
+    });
+
+    const product = await prisma.product.findUnique({
+      where: { id: updateQuantity.productId },
+      select: {
+        name: true,
+        price: true,
+        images: true,
+      },
+    });
+
+    const responseItem = {
+      id: updateQuantity?.id,
+      productId: updateQuantity?.productId,
+      name: product?.name,
+      price: product?.price,
+      image: product?.images[0],
+      color: updateQuantity.color,
+      size: updateQuantity.size,
+      quantity: updateQuantity.quantity,
+    };
+
+    res.status(200).json({
+      success: true,
+      message: "cart item quantity updated successfully",
+      data: responseItem,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "failed to delete",
+    });
+  }
+};
