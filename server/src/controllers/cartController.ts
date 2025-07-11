@@ -129,3 +129,34 @@ export const getCart = async (
     });
   }
 };
+
+export const deleteFromCart = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+    const { id } = req.params;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: "user is not authenticated",
+      });
+      return;
+    }
+
+    await prisma.cartItem.delete({ where: { id, cart: { userId } } });
+
+    res.status(200).json({
+      success: true,
+      message: "Item is removed from the cart",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "failed to delete",
+    });
+  }
+};
