@@ -6,6 +6,7 @@ import authRoutes from "./routes/authRoutes";
 import productRoutes from "./routes/productRoutes";
 import couponRoutes from "./routes/couponRoutes";
 import settingRoutes from "./routes/settingRoutes";
+import cartRoutes from "./routes/cartRoutes";
 import { log } from "console";
 import { PrismaClient } from "@prisma/client";
 
@@ -31,6 +32,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/coupons", couponRoutes);
 app.use("/api/settings", settingRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get("/", (req, res) => {
   res.send("hell from e-commerce backend");

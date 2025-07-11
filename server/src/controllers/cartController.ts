@@ -216,3 +216,37 @@ export const updateCartItemQuantity = async (
     });
   }
 };
+
+export const clearEntireCart = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const userId = req.user?.userId;
+
+    if (!userId) {
+      res.status(401).json({
+        success: false,
+        message: "Unauthenticated user",
+      });
+
+      return;
+    }
+
+    await prisma.cartItem.deleteMany({
+      where: {
+        cart: { userId },
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "cart cleared successfully!",
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to clear cart!",
+    });
+  }
+};
