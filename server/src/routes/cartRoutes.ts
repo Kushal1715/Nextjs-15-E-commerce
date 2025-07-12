@@ -14,6 +14,6 @@ router.post("/add", authenticateJwt, addToCart);
 router.get("/get", authenticateJwt, getCart);
 router.delete(`/delete/:id`, authenticateJwt, deleteFromCart);
 router.put("/update/:id", authenticateJwt, updateCartItemQuantity);
-router.put("/clear", authenticateJwt, clearEntireCart);
+router.post("/clear", authenticateJwt, clearEntireCart);
 
 export default router;
