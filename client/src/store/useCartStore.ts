@@ -14,19 +14,19 @@ export interface CartItem {
 }
 
 interface CartStore {
-  cartItem: CartItem[];
+  cartItems: CartItem[];
   isLoading: boolean;
   error: string | null;
   fetchCart: () => Promise<void>;
   addToCart: (item: Omit<CartItem, "id">) => Promise<void>;
-  deleteCart?: (id: string) => Promise<void>;
+  deleteCart: (id: string) => Promise<void>;
   updateQuantity?: (id: string, quantity: number) => Promise<void>;
   clearCart?: () => Promise<void>;
 }
 
 export const useCartStore = create<CartStore>((set, get) => {
   return {
-    cartItem: [],
+    cartItems: [],
     isLoading: false,
     error: null,
     fetchCart: async () => {
@@ -36,7 +36,7 @@ export const useCartStore = create<CartStore>((set, get) => {
           withCredentials: true,
         });
 
-        set({ isLoading: false, cartItem: response.data.data });
+        set({ isLoading: false, cartItems: response.data.data });
       } catch (e) {
         set({ isLoading: false, error: "failed to load cart items" });
       }
@@ -49,11 +49,26 @@ export const useCartStore = create<CartStore>((set, get) => {
         });
 
         set((state) => ({
-          cartItem: [...state.cartItem, reponse.data.data],
+          cartItems: [...state.cartItems, reponse.data.data],
           isLoading: false,
         }));
       } catch (e) {
         set({ isLoading: false, error: "failed to add to cart" });
+      }
+    },
+    deleteCart: async (id) => {
+      set({ isLoading: true, error: null });
+      try {
+        const reponse = await axios.delete(`${API_ROUTES.CART}/delete${id}`, {
+          withCredentials: true,
+        });
+
+        set((state) => ({
+          cartItems: state.cartItems.filter((item) => item.id !== id),
+          isLoading: false,
+        }));
+      } catch (e) {
+        set({ isLoading: false, error: "failed to delete cart item" });
       }
     },
   };
