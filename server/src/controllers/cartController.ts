@@ -60,6 +60,11 @@ export const addToCart = async (
       size: cartItem?.size,
       quantity: cartItem.quantity,
     };
+
+    res.status(200).json({
+      success: true,
+      data: responseItem,
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({

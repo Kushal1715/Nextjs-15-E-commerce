@@ -17,8 +17,8 @@ interface CartStore {
   cartItem: CartItem[];
   isLoading: boolean;
   error: string | null;
-  fetchCart?: () => Promise<void>;
-  addToCart?: (item: Omit<CartItem, "id">) => Promise<void>;
+  fetchCart: () => Promise<void>;
+  addToCart: (item: Omit<CartItem, "id">) => Promise<void>;
   deleteCart?: (id: string) => Promise<void>;
   updateQuantity?: (id: string, quantity: number) => Promise<void>;
   clearCart?: () => Promise<void>;
@@ -39,6 +39,21 @@ export const useCartStore = create<CartStore>((set, get) => {
         set({ isLoading: false, cartItem: response.data.data });
       } catch (e) {
         set({ isLoading: false, error: "failed to load cart items" });
+      }
+    },
+    addToCart: async (item) => {
+      set({ isLoading: true, error: null });
+      try {
+        const reponse = await axios.post(`${API_ROUTES.CART}/add`, item, {
+          withCredentials: true,
+        });
+
+        set((state) => ({
+          cartItem: [...state.cartItem, reponse.data.data],
+          isLoading: false,
+        }));
+      } catch (e) {
+        set({ isLoading: false, error: "failed to add to cart" });
       }
     },
   };
